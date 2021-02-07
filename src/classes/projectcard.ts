@@ -68,8 +68,9 @@ export class ProjectCardClass {
             let blnResponse: boolean = false;
             if (undefined !== this.autoLabelConfig && this.autoLabelConfig.length > 0) {
                 for(let iConfig = 0; iConfig < this.autoLabelConfig.length; iConfig++) {
-                    if (this.autoLabelConfig[iConfig].column = columnName) {
+                    if (this.autoLabelConfig[iConfig].column === columnName) {
                         blnResponse = true;
+                        break;
                     }
                 }
             }
@@ -84,9 +85,10 @@ export class ProjectCardClass {
         try {
             if (undefined !== this.autoLabelConfig && this.autoLabelConfig.length > 0) {
                 for(let iConfig = 0; iConfig < this.autoLabelConfig.length; iConfig++) {
-                    if (this.autoLabelConfig[iConfig].column = columnName) {
+                    if (this.autoLabelConfig[iConfig].column === columnName) {
                         this.labelsToAdd = this.autoLabelConfig[iConfig].add_labels;
                         this.labelsToRemove = this.autoLabelConfig[iConfig].remove_labels;
+                        break;
                     }
                 }
             }
