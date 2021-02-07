@@ -1,4 +1,4 @@
-name: 'ProjectCard AutoLabels'
+name: 'ProjectCard AutoLabel'
 description: 'Automatically assign labels as the project card moves between columns of a project board'
 author: 'MatticusAu'
 inputs:
