@@ -21,6 +21,24 @@ export default async function projectCardMoveHandler(core: CoreModule, github: G
         // make sure this is an issue and not a note
         if (undefined !== projectCardWebhookPayload.project_card && undefined !== projectCardWebhookPayload.project_card.content_url) {
             core.info('content_url is defined');
+            core.info('column_id: ' + projectCardWebhookPayload.project_card.column_id.toString());
+            
+            // get the issue number
+            let issueContentUrl: string = projectCardWebhookPayload.project_card.content_url;
+            let issueNumber: number = 0;
+            if (issueContentUrl.indexOf('/issues/') > 0) {
+                issueContentUrl = issueContentUrl.substring(issueContentUrl.indexOf('/issues/') + 8)
+                core.info('issueContentUrl: ' + issueContentUrl);
+                issueNumber = parseInt(issueContentUrl);
+            }
+            
+
+            // const myToken = core.getInput('repo-token');
+            // const octokit = github.getOctokit(myToken);
+            // const { data: issueResponseData } = await octokit.issues.get({
+            //     ...github.context.repo,
+            //     issue_number: issueNumber,
+            //   });
         }
 
     }
