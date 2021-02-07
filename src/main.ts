@@ -18,7 +18,7 @@ export default async function main(core: CoreModule, github: GitHubModule) {
     // await config.loadConfig(core, github);
     // core.debug('config loaded');
     // core.debug('config: ' + JSON.stringify(config.configuration));
-    core.debug('context: ' + github.context);
+    core.info('context: ' + github.context);
     
     const event = github.context.eventName
     switch (event) {
