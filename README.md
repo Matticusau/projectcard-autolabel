@@ -31,7 +31,7 @@ Set the following inputs in the workflow file
 
 ### `autolabel-config`
 
-Provide the project column configuration for the auto labeling based on column name pattern matches. JSON object as string, example format [{"column":"in-progress"; "add-labels":["in-progress"]; "remove-labels":["triage"]}].
+Provide the project column configuration for the auto labeling based on column name pattern matches. JSON object as string, example format [{"column":"in-progress", "add-labels":["in-progress"], "remove-labels":["triage"]}].
 
 ## Outputs
 
@@ -57,7 +57,7 @@ jobs:
       uses: Matticusau/projectcard-autolabel@v1.0.0
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-        autolabel-config: '[{"column":"in-progress"; "add-labels":["in-progress"]; "remove-labels":["triage"]}]'
+        autolabel-config: '[{"column":"in-progress", "add-labels":["in-progress"], "remove-labels":["triage"]}]'
 ```
 
 > Note: The `uses` syntax includes tag/branch specification. For the latest release see [tags](https://github.com/Matticusau/projectcard-autolabel/tags).
@@ -83,7 +83,7 @@ The action can be customized using the additional inputs on the workflow yaml fi
 ```yml
 with:
   repo-token: ${{ secrets.GITHUB_TOKEN }}
-  autolabel-config: '[{"column":"in-progress"; "add-labels":["in-progress"]; "remove-labels":["triage"]}]'
+  autolabel-config: '[{"column":"in-progress", "add-labels":["in-progress"], "remove-labels":["triage"]}]'
 ```
 
 ## Troubleshooting

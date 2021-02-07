@@ -74,14 +74,17 @@ export default async function projectCardMoveHandler(core: CoreModule, github: G
                 }
 
                 var issueLabels = new IssueLabels(issueLabelsData);
+                core.info('issueLabels: ' + JSON.stringify(issueLabels));
 
                 // update the labels
+                core.info('projectCardClass.labelsToRemove: ' + JSON.stringify(projectCardClass.labelsToRemove));
                 if (undefined !== projectCardClass.labelsToRemove && projectCardClass.labelsToRemove.length > 0) {
                     core.info('labelsToRemove: ' + JSON.stringify(projectCardClass.labelsToRemove));
                     for(let iLabel = 0; iLabel < projectCardClass.labelsToRemove.length; iLabel++) {
                         issueLabels.removeLabel(projectCardClass.labelsToRemove[iLabel]);
                     }
                 }
+                core.info('projectCardClass.labelsToAdd: ' + JSON.stringify(projectCardClass.labelsToAdd));
                 if (undefined !== projectCardClass.labelsToAdd && projectCardClass.labelsToAdd.length > 0) {
                     core.info('labelsToAdd: ' + JSON.stringify(projectCardClass.labelsToAdd));
                     for(let iLabel = 0; iLabel < projectCardClass.labelsToAdd.length; iLabel++) {
