@@ -16,7 +16,7 @@ interface AutoLabelConfig {
     add_labels?: string[];
     remove_labels?: string[];
 }
-// autolabel-config: '[{"column":"in-progress", "add_labels":["in-progress"], "remove_labels":["triage"]}]'
+// autolabel-config: '[{"column":"In progress", "add_labels":["in-progress"], "remove_labels":["triage"]}]'
 
 export class ProjectCardClass {
 
