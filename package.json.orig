@@ -1,0 +1,28 @@
+{
+  "name": "pr-helper",
+  "version": "1.0.0",
+  "description": "A GitHub Action to help with managing PRs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Matticusau/pr-helper.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Matticusau/pr-helper/issues"
+  },
+  "homepage": "https://github.com/Matticusau/pr-helper#readme",
+  "dependencies": {
+    "@actions/core": "^1.2.4",
+    "@actions/github": "^3.0.0",
+    "@types/js-yaml": "^3.12.4",
+    "@types/minimatch": "^3.0.3",
+    "js-yaml": "^3.14.0",
+    "minimatch": "^3.0.4"
+  }
+}

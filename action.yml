@@ -1,0 +1,16 @@
+name: 'ProjectCard AutoLabels'
+description: 'Automatically assign labels as the project card moves between columns of a project board'
+author: 'MatticusAu'
+inputs:
+  repo-token:
+    description: 'The GITHUB_TOKEN secret to use with authenticating. If you require additional permissions use a PAT stored as a secret on your repo.'
+    required: true
+  autolabel-config:
+    description: 'Provide the project column configuration for the auto labeling based on column name pattern matches. JSON object as string.'
+    required: true
+runs:
+  using: 'node12'
+  main: 'lib/index.js'
+branding:
+  icon: git-merge
+  color: green

@@ -38,8 +38,12 @@ bower_components
 build/Release
 
 # Dependency directories
-node_modules/
+# node_modules/
 jspm_packages/
+
+# for GH Actions you need to push this folder to check in @actions/core & @actions/github modules
+# alternatively for typescript build the js files and then you dont need the modules dir, so it can be excluded again
+node_modules/
 
 # TypeScript v1 declaration files
 typings/
