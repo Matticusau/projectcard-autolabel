@@ -102,6 +102,8 @@ export default async function projectCardMoveHandler(core: CoreModule, github: G
                         labels: issueLabels.labels
                     });
                 }
+            } else {
+                core.info('No rules found for column');
             }
 
         }
