@@ -30,15 +30,17 @@ export default async function projectCardMoveHandler(core: CoreModule, github: G
                 issueContentUrl = issueContentUrl.substring(issueContentUrl.indexOf('/issues/') + 8)
                 core.info('issueContentUrl: ' + issueContentUrl);
                 issueNumber = parseInt(issueContentUrl);
-            }
-            
+            }            
 
-            // const myToken = core.getInput('repo-token');
-            // const octokit = github.getOctokit(myToken);
-            // const { data: issueResponseData } = await octokit.issues.get({
-            //     ...github.context.repo,
-            //     issue_number: issueNumber,
-            //   });
+            // get the issue details
+            const myToken = core.getInput('repo-token');
+            const octokit = github.getOctokit(myToken);
+            const { data: issueResponseData } = await octokit.issues.get({
+                ...github.context.repo,
+                issue_number: issueNumber,
+            });
+            core.info('issueResponseData: ' + JSON.stringify(issueResponseData));
+
         }
 
     }
