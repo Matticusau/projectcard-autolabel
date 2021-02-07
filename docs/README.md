@@ -1,6 +1,6 @@
-# ProjectCard-AutoLabels Docs
+# ProjectCard-AutoLabel Docs
 
-Simple documentation around ProjectCard-AutoLabels, including notes for contributors on payloads
+Simple documentation around ProjectCard-AutoLabel, including notes for contributors on payloads
 
 ## GitHub API & Webhook Payload notes
 

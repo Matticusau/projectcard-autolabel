@@ -1,5 +1,5 @@
 {
-  "name": "projectcard-autolabels",
+  "name": "projectcard-autolabel",
   "version": "1.0.0",
   "description": "A GitHub Action to autolabel project cards",
   "main": "lib/main.js",
@@ -15,15 +15,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Matticusau/projectcard-autolabels.git"
+    "url": "git+https://github.com/Matticusau/projectcard-autolabel.git"
   },
   "keywords": [],
   "author": "MatticusAu",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Matticusau/projectcard-autolabels/issues"
+    "url": "https://github.com/Matticusau/projectcard-autolabel/issues"
   },
-  "homepage": "https://github.com/Matticusau/projectcard-autolabels#readme",
+  "homepage": "https://github.com/Matticusau/projectcard-autolabel#readme",
   "dependencies": {
     "@actions/core": "^1.2.4",
     "@actions/github": "^3.0.0",

@@ -1,10 +1,10 @@
-[![License](https://img.shields.io/github/license/Matticusau/pr-helper.svg?style=flat-square)](LICENSE)
-[![Last commit](https://img.shields.io/github/last-commit/Matticusau/pr-helper.svg?style=flat-square)](https://github.com/heinrichreimer/action-github-changelog-generator/commits)
-[![Latest tag](https://img.shields.io/github/tag/Matticusau/pr-helper.svg?style=flat-square)](https://github.com/heinrichreimer/action-github-changelog-generator/releases)
-[![Issues](https://img.shields.io/github/issues/Matticusau/pr-helper.svg?style=flat-square)](https://github.com/heinrichreimer/action-github-changelog-generator/issues)
-[![Pull requests](https://img.shields.io/github/issues-pr/Matticusau/pr-helper.svg?style=flat-square)](https://github.com/heinrichreimer/action-github-changelog-generator/pulls)
+[![License](https://img.shields.io/github/license/Matticusau/projectcard-autolabel.svg?style=flat-square)](LICENSE)
+[![Last commit](https://img.shields.io/github/last-commit/Matticusau/projectcard-autolabel.svg?style=flat-square)](https://github.com/heinrichreimer/action-github-changelog-generator/commits)
+[![Latest tag](https://img.shields.io/github/tag/Matticusau/projectcard-autolabel.svg?style=flat-square)](https://github.com/heinrichreimer/action-github-changelog-generator/releases)
+[![Issues](https://img.shields.io/github/issues/Matticusau/projectcard-autolabel.svg?style=flat-square)](https://github.com/heinrichreimer/action-github-changelog-generator/issues)
+[![Pull requests](https://img.shields.io/github/issues-pr/Matticusau/projectcard-autolabel.svg?style=flat-square)](https://github.com/heinrichreimer/action-github-changelog-generator/pulls)
 
-# projectcard-autolabels
+# projectcard-autolabel
 
 [GitHub Action](https://github.com/features/actions) to automatically assign labels as the project card moves between columns of a project board. Very versatile with plenty of configuration settings to adapt to many different implementations.
 
@@ -39,7 +39,7 @@ None
 
 ## Example usage
 
-Create the following file within your repo as `.github/workflows/projectcard-autolabels.yml` to configure an action.
+Create the following file within your repo as `.github/workflows/projectcard-autolabel.yml` to configure an action.
 
 ```yml
 name: ProjectCard Auto Labels
@@ -60,7 +60,7 @@ jobs:
         autolabel-config: '[{"column":"in-progress"; "add-labels":["in-progress"]; "remove-labels":["triage"]}]'
 ```
 
-> Note: The `uses` syntax includes tag/branch specification. For the latest release see [tags](https://github.com/Matticusau/projectcard-autolabels/tags).
+> Note: The `uses` syntax includes tag/branch specification. For the latest release see [tags](https://github.com/Matticusau/projectcard-autolabel/tags).
 
 To restrict the branches that this workflow executes on use this syntax
 
