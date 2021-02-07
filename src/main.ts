@@ -7,7 +7,8 @@
 // ------------------------------------------------------------------------------------------
 //
 
-import projectCardHandler from './projectcardhandler';
+import { context } from '@actions/github/lib/utils';
+import projectCardMoveHandler from './projectcardmovehandler';
 import { CoreModule, GitHubModule } from './types';
 // import { ConfigHelper } from './classes';
 // import prHello from './hello'
@@ -22,7 +23,9 @@ export default async function main(core: CoreModule, github: GitHubModule) {
     
     const event = github.context.eventName
     switch (event) {
-        case 'project_cards':
-            await projectCardHandler(core, github);
+        case 'project_card':
+            if (context.payload.action == 'moved') {
+                await projectCardMoveHandler(core, github);
+            }
     }
 }

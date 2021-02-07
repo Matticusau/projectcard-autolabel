@@ -11,6 +11,7 @@
 
 import github from '@actions/github';
 import core from '@actions/core';
+import Interfaces from '@actions/github/lib/interfaces'
 
 export type CoreModule = typeof core
 export type GitHubModule = typeof github
@@ -74,3 +75,67 @@ export declare type PullRequestFilePayload = {
     patch: string;
     // previous_filename: string;
 };
+
+export interface ProjectCardWebhookPayload {
+    [key: string]: any;
+    repository?: Interfaces.PayloadRepository;
+    issue?: {
+        [key: string]: any;
+        number: number;
+        html_url?: string;
+        body?: string;
+    };
+    pull_request?: {
+        [key: string]: any;
+        number: number;
+        html_url?: string;
+        body?: string;
+    };
+    sender?: {
+        [key: string]: any;
+        type: string;
+    };
+    action?: string;
+    installation?: {
+        id: number;
+        [key: string]: any;
+    };
+    comment?: {
+        id: number;
+        [key: string]: any;
+    };
+    project_card?: {
+        after_id: number;
+        archived: boolean;
+        column_id: number;
+        column_url: string;
+        content_url: string;
+        created_at: string;
+        creator: {
+            avatar_url: string;
+            events_url: string;
+            followers_url: string;
+            following_url: string;
+            gists_url: string;
+            gravatar_id: string;
+            html_url: string;
+            id: number;
+            login: string;
+            node_id: string;
+            organizations_url: string;
+            received_events_url: string;
+            repos_url: string;
+            site_admin: false,
+            starred_url: string;
+            subscriptions_url: string;
+            type: string;
+            url: string;
+        },
+        id: number;
+        node_id: string;
+        note: string;
+        project_url: string;
+        updated_at: string;
+        url: string;
+    }
+}

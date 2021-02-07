@@ -10,7 +10,7 @@
 import { CoreModule, GitHubModule, Context, PullRequestPayload } from '../types';
 import { IssueLabels } from './index';
 import { PullsGetResponseData } from '@octokit/types/dist-types'
-
+import { ProjectsGetCardResponseData } from '@octokit/types/dist-types'
 interface DeleteBranchConfig {
     deny?: string[];
     allow?: string[];
