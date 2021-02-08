@@ -34,7 +34,7 @@ Reference [https://help.github.com/en/actions/creating-actions/creating-a-javasc
 When time comes for a release assign a tag
 
 ```bash
-git tag -a v0.1 -m "Release v0.1"
+git tag -a v1.0.0 -m "Release v1.0.0"
 git push --follow-tags
 ```
 
