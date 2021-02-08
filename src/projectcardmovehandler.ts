@@ -15,17 +15,17 @@ import { context } from '@actions/github/lib/utils';
 export default async function projectCardMoveHandler(core: CoreModule, github: GitHubModule) {
 
     try {
-        core.info('context: ' + JSON.stringify(github.context));
+        //core.info('context: ' + JSON.stringify(github.context));
 
         const projectCardClass = new ProjectCardClass(core, github);
 
         // get the config
-        await projectCardClass.GetProjectColumnAutoLabelConfig();
+        await projectCardClass.GetConfig();
 
         var projectCardWebhookPayload: ProjectCardWebhookPayload = github.context.payload;
         // make sure this is an issue and not a note
         if (undefined !== projectCardWebhookPayload.project_card && undefined !== projectCardWebhookPayload.project_card.content_url) {
-            core.info('content_url is defined');
+            //core.info('content_url is defined');
             core.info('column_id: ' + projectCardWebhookPayload.project_card.column_id.toString());
             
             // octokit
@@ -37,75 +37,87 @@ export default async function projectCardMoveHandler(core: CoreModule, github: G
                 ...github.context.repo,
                 column_id: projectCardWebhookPayload.project_card.column_id
             });
-            core.info('columnResponseData: ' + JSON.stringify(columnResponseData));
+            //core.info('columnResponseData: ' + JSON.stringify(columnResponseData));
             core.info('column name: ' + columnResponseData.name);
 
-            // make sure the column matches one of our rules
-            if (await projectCardClass.columnHasAutoLabelConfig(columnResponseData.name)) {
-                core.info('rule found for column');
+            // check this project should be processed
+            let projectNumber: number = projectCardClass.getProjectIdFromUrl(projectCardWebhookPayload.project_card.project_url);
+            if (await projectCardClass.projectShouldBeProcessed(projectNumber)) {
 
-                await projectCardClass.GetLabelChangesToMake(columnResponseData.name);
+                // make sure the column matches one of our rules
+                if (await projectCardClass.columnHasAutoLabelConfig(columnResponseData.name)) {
+                    core.info('rule found for column');
 
-                // get the issue number
-                let issueContentUrl: string = projectCardWebhookPayload.project_card.content_url;
-                let issueNumber: number = 0;
-                if (issueContentUrl.indexOf('/issues/') > 0) {
-                    issueContentUrl = issueContentUrl.substring(issueContentUrl.indexOf('/issues/') + 8)
-                    core.info('issueContentUrl: ' + issueContentUrl);
-                    issueNumber = parseInt(issueContentUrl);
-                }
+                    // get the issue number
+                    let issueContentUrl: string = projectCardWebhookPayload.project_card.content_url;
+                    // let issueNumber: number = 0;
+                    // if (issueContentUrl.indexOf('/issues/') > 0) {
+                    //     issueContentUrl = issueContentUrl.substring(issueContentUrl.indexOf('/issues/') + 8)
+                    //     //core.info('issueContentUrl: ' + issueContentUrl);
+                    //     issueNumber = parseInt(issueContentUrl);
+                    // }
+                    let issueNumber: number = projectCardClass.getIssueNumberFromContentUrl(issueContentUrl);
 
-                // get the issue details
-                const { data: issueResponseData } = await octokit.issues.get({
-                    ...github.context.repo,
-                    issue_number: issueNumber,
-                });
-                core.info('issueResponseData: ' + JSON.stringify(issueResponseData));
+                    // make sure we got the issue number
+                    if (issueNumber > 0) {
 
-                // get the issue labels
-                const { data: issueLabelsData } = await octokit.issues.listLabelsOnIssue({
-                    ...github.context.repo,
-                    issue_number: issueNumber,
-                });
+                        // get the issue details
+                        const { data: issueResponseData } = await octokit.issues.get({
+                            ...github.context.repo,
+                            issue_number: issueNumber,
+                        });
+                        //core.info('issueResponseData: ' + JSON.stringify(issueResponseData));
 
-                if (!issueLabelsData) {
-                    core.error('Could not get pull request labels, exiting');
-                    return;
-                }
+                        // get the issue labels
+                        const { data: issueLabelsData } = await octokit.issues.listLabelsOnIssue({
+                            ...github.context.repo,
+                            issue_number: issueNumber,
+                        });
 
-                var issueLabels = new IssueLabels(issueLabelsData);
-                core.info('issueLabels: ' + JSON.stringify(issueLabels));
+                        if (!issueLabelsData) {
+                            core.error('Could not get pull request labels, exiting');
+                            return;
+                        }
 
-                // update the labels
-                core.info('projectCardClass.labelsToRemove: ' + JSON.stringify(projectCardClass.labelsToRemove));
-                if (undefined !== projectCardClass.labelsToRemove && projectCardClass.labelsToRemove.length > 0) {
-                    core.info('labelsToRemove: ' + JSON.stringify(projectCardClass.labelsToRemove));
-                    for(let iLabel = 0; iLabel < projectCardClass.labelsToRemove.length; iLabel++) {
-                        // core.info('removing label: ' + projectCardClass.labelsToRemove[iLabel]);
-                        issueLabels.removeLabel(projectCardClass.labelsToRemove[iLabel]);
+                        var issueLabels = new IssueLabels(issueLabelsData);
+                        //core.info('issueLabels: ' + JSON.stringify(issueLabels));
+
+                        // update the labels
+                        //core.info('projectCardClass.labelsToRemove: ' + JSON.stringify(projectCardClass.labelsToRemove));
+                        if (undefined !== projectCardClass.labelsToRemove && projectCardClass.labelsToRemove.length > 0) {
+                            // core.info('processing labels to remove');
+                            for(let iLabel = 0; iLabel < projectCardClass.labelsToRemove.length; iLabel++) {
+                                // core.info('removing label: ' + projectCardClass.labelsToRemove[iLabel]);
+                                issueLabels.removeLabel(projectCardClass.labelsToRemove[iLabel]);
+                            }
+                        }
+                        //core.info('issueLabels: ' + JSON.stringify(issueLabels));
+                        //core.info('projectCardClass.labelsToAdd: ' + JSON.stringify(projectCardClass.labelsToAdd));
+                        if (undefined !== projectCardClass.labelsToAdd && projectCardClass.labelsToAdd.length > 0) {
+                            // core.info('processing labels to add');
+                            for(let iLabel = 0; iLabel < projectCardClass.labelsToAdd.length; iLabel++) {
+                                issueLabels.addLabel(projectCardClass.labelsToAdd[iLabel]);
+                            }
+                        }
+
+                        if (issueLabels.haschanges) {
+                            core.info('Updating labels on Issue ' + issueNumber.toString());
+                            // set the label
+                            await octokit.issues.setLabels({
+                                owner: github.context.repo.owner,
+                                repo: github.context.repo.repo,
+                                issue_number: issueNumber,
+                                labels: issueLabels.labels
+                            });
+                        }
+                    } else {
+                        core.error('Could not determine Issue Number');
                     }
-                }
-                //core.info('issueLabels: ' + JSON.stringify(issueLabels));
-                core.info('projectCardClass.labelsToAdd: ' + JSON.stringify(projectCardClass.labelsToAdd));
-                if (undefined !== projectCardClass.labelsToAdd && projectCardClass.labelsToAdd.length > 0) {
-                    core.info('labelsToAdd: ' + JSON.stringify(projectCardClass.labelsToAdd));
-                    for(let iLabel = 0; iLabel < projectCardClass.labelsToAdd.length; iLabel++) {
-                        issueLabels.addLabel(projectCardClass.labelsToAdd[iLabel]);
-                    }
-                }
-
-                if (issueLabels.haschanges) {
-                            
-                    // set the label
-                    await octokit.issues.setLabels({
-                        owner: github.context.repo.owner,
-                        repo: github.context.repo.repo,
-                        issue_number: issueNumber,
-                        labels: issueLabels.labels
-                    });
+                } else {
+                    core.info('No rules found for column');
                 }
             } else {
-                core.info('No rules found for column');
+                core.info('Project id ' + projectNumber + ' excluded by config');
             }
 
         }

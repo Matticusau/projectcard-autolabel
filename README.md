@@ -33,6 +33,10 @@ Set the following inputs in the workflow file
 
 Provide the project column configuration for the auto labeling based on column name pattern matches. JSON object as string, example format [{"column":"In progress", "add_labels":["in-progress"], "remove_labels":["triage"]}].
 
+### `projectfilter-config`
+
+Provide the project patterns which will include/exclude projects. JSON object as string, example format {"include":["projectid"], "exclude":[]}.
+
 ## Outputs
 
 None
