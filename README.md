@@ -10,7 +10,11 @@
 
 Currently supports the following functionality:
 
-- TBA
+- Automatically assign or remove labels based on Project Column a Card (issue) is moved to
+- Filter project ids to include / exclude
+- Filter project columns to action on
+
+![animation](./docs/images/20210209120322.gif)
 
 ## Events
 
